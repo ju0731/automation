@@ -16,9 +16,9 @@
                 <h1>Automation Car sharing</h1>
                 <p class="lead text-muted">Select your car from list below.</p>
                 <p>
-                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                    <a style="padding-left: 10px;"></a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                    <a href="#" class="btn btn-primary my-2" @click="onClickuploadCar">차량 등록</a>
+                    <a id="reservation" @click="onClickReservation" style="padding-left: 10px;"></a>
+                    <a href="#" class="btn btn-secondary my-2">예약 확인</a>
                 </p>
             </div>
         </section>
@@ -29,7 +29,7 @@
                 <div class="row">
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>CarImage</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>CarImage</title><rect width="100%" height="100%" fill="#55595c"/></svg>
                             <div class="card-body">
                                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                                 <div class="d-flex justify-content-between align-items-center">
@@ -37,12 +37,11 @@
                                         <button type="button" class="btn btn-sm btn-outline-secondary">예약</button>
                                         <button type="button" class="btn btn-sm btn-outline-secondary">조회</button>
                                     </div>
-                                    <small class="text-muted">81개 남음</small>
+                                    <small class="text-muted">재고 : 81</small>
                                 </div>
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -50,13 +49,47 @@
 
 </template>
 
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js" ></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+
+var reservename = "";
 document.onreadystatechange = () => {
   if (document.readyState == "complete") {
-      for(var i=0; i<7; i++) {
-        document.querySelector(".row").innerHTML += "<div class='col-md-4'><div class='card mb-4 shadow-sm'><svg class='bd-placeholder-img card-img-top' width='100%' height='225' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img' aria-label='Placeholder: Thumbnail'><title>CarImage</title><rect width='100%' height='100%' fill='#55595c'/><text x='50%' y='50%' fill='#eceeef' dy='.3em'>Thumbnail</text></svg><div class='card-body'><p class='card-text'>This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button type='button' class='btn btn-sm btn-outline-secondary'>예약</button><button type='button' class='btn btn-sm btn-outline-secondary'>조회</button></div><small class='text-muted'>81개 남음</small></div></div></div></div>";
-      }
+        axios.get('http://localhost:8090/v0.0.3/crbs', {
+        })
+        .then(function(response){
+
+      for(var i=0; i<response.data.car.length; i++) {
+        var url ="";
+        url = localStorage.getItem(response.data.car[i].name);
+
+        document.querySelector(".row").insertAdjacentHTML("beforeend", "<div class='col-md-4'><div class='card mb-4 shadow-sm'><svg class='bd-placeholder-img card-img-top' width='100%' height='200px' xmlns='http://www.w3.org/2000/svg' preserveAspectRatio='xMidYMid slice' focusable='false' role='img' aria-label='Placeholder: Thumbnail'><title>CarImage</title><image xlink:href='"+url+"' width='100%' height='100%' /></svg><div class='card-body'><p>"+response.data.car[i].name+"</p><small class='text-muted'>"+response.data.car[i].fuel+"</small><br><small class='text-muted'>"+response.data.car[i].size+"</small><p class='card-text'>"+response.data.car[i].price+"/일</p><hr class='mb-4'><div class='d-flex justify-content-between align-items-center'><div class='btn-group'><button class='btn btn-sm btn-outline-secondary' id='car"+i+"' style='width:70px' value='"+i+"'>예약</button></div><small class='badge badge-secondary badge-pill' style='width:70px;height:20px;font-size:13px;'>재고 : "+response.data.car[i].cnt+"</small></div></div></div></div>");
+
+            document.querySelector("#car"+i).addEventListener("click", function () {
+                reservename = this.id;
+                document.querySelector("#reservation").click();
+            });
+        }
+    });
   }
+}
+
+export default {
+    data() {
+        return {
+            imageUrl: null,
+        }
+    },
+    methods: {
+        onClickuploadCar() {
+            this.$router.push('/admin');
+        },
+        onClickReservation() {
+            console.log(document.querySelector("#"+reservename).value);
+            this.$router.push('/reservation/'+document.querySelector("#"+reservename).value);;
+        }
+    }
 }
 
 </script>

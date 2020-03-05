@@ -1,10 +1,7 @@
 <template>
   <div>
     <br>
-    <center>
-    <img src="@/assets/bespin.png" fluid alt="Responsive image"
-    style="max-width: 25rem;">
-    </center>
+    
     <br>
     <br>
     <center>

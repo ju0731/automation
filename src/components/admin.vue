@@ -25,7 +25,6 @@
             <div class="col-md-4 order-md-2 mb-4">
                 <h4 class="d-flex justify-content-between align-items-center mb-3">
                     <span class="text-muted" style="padding-left:80px;">차량 이미지 등록</span>
-                    <!--<span class="badge badge-secondary badge-pill">3</span> 숫자 이미지--> 
                 </h4>
                 <hr class="mb-4">
                 <ul class="list-group mb-3">
@@ -35,13 +34,10 @@
                                 <img v-else :src="imageUrl" style="width:320px;height:250px;">
                         </div>
 
-
                 </ul>
                 <form class="card p">
                     <input ref="imageInput" type="file" hidden @change="onChangeImages">
-                        <!--<input type="file" id="real-input" class="image_inputType_file" accept="img/*" required multiple>-->
                     <button type="button" class="btn btn-secondary" @click="onClickImageUpload">이미지 업로드</button>
-                    <!--<button class="btn btn-secondary" id="browse-btn">사진업로드</button>-->
                 </form>
 
                 <!--                    
@@ -170,9 +166,9 @@
 </template>
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js" ></script>
-    <!--엑시오스 CDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+var dataUrl;
 export default {
     data() {
         return {
@@ -184,11 +180,31 @@ export default {
             this.$refs.imageInput.click();
         },
         onChangeImages(e) {
-            console.log(e.target.files)
-            const file = e.target.files[0];
-            this.imageUrl = URL.createObjectURL(file);
+            console.log(e.target.files);
+            if(this.imageUrl==null) {
+                const file = e.target.files[0];
+                this.imageUrl = URL.createObjectURL(file);
+
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    this.imageSrc = e.target.result;
+                    dataUrl = this.imageSrc;
+                };
+                reader.onerror = function(error) {
+                    alert(error);
+                };
+                reader.readAsDataURL(file);
+
+            }
+            else { 
+                console.log("Good"); 
+            }
         },
         onClicksubmit() {
+            //console.log(dataUrl);
+            var model = "";
+            model = document.querySelector("#modelname").value;
+            localStorage.setItem(model, dataUrl); 
             console.log(document.querySelector("#carnum").value);
             console.log(document.querySelector("#modelname").value);
             console.log(document.querySelector("#modelsize").value);
@@ -196,40 +212,23 @@ export default {
             console.log(document.querySelector("#fuelname").value);
             console.log(document.querySelector("#price").value);
 
-
-
-      axios.get('http://121.166.105.87:8090/v0.0.3/crbs', {
-      })
-      .then(function(res) {
-      	console.log(res.data)
-      }, function() {
-      	console.log('failed')
-      })
+/*
+            axios.post('http://localhost:8090/users/', {
+                "carnum" : document.querySelector("#carnum").value,
+                "modelname" : document.querySelector("#modelname").value,
+                "modelsize" : document.querySelector("#modelsize").value,
+                "modelcolor" : document.querySelector("#modelcolor").value,
+                "fuelname" : document.querySelector("#fuelname").value,
+                "price" : document.querySelector("#price").value
+            })
+            .then(function(response){
+                alert(response);
+                console.log(response); // 객체 형태로 반환. 파싱작업 불필요
+            });*/
 
             console.log("submit");
         }
     }
 }
 
-/*new Vue({
-  el: '#myForm',
-  data: {
-  	title: 'hello',
-    body: 'world'
-  },
-  methods: {
-    sendPost: function () {
-      axios.post('//jsonplaceholder.typicode.com/posts', {
-      	userId: 1,
-      	title: this.title,
-      	body: this.body
-      })
-      .then(function(res) {
-      	console.log(res.data)
-      }, function() {
-      	console.log('failed')
-      })
-    }
-  }
-}) */
 </script>
