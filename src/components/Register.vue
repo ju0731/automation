@@ -14,13 +14,8 @@
               type="text"
               class="form-control"
               name="username"
-              v-model="user.username"
               v-validate="'required|min:3|max:20'"
             />
-            <div
-              class="alert-danger"
-              v-if="submitted && errors.has('username')"
-            >{{errors.first('username')}}</div>
           </div>
           <div class="form-group">
             <label for="id">id</label>
@@ -28,13 +23,8 @@
               type="text"
               class="form-control"
               name="id"
-              v-model="user.id"
               v-validate="'required|max:50'"
             />
-            <div
-              class="alert-danger"
-              v-if="submitted && errors.has('id')"
-            >{{errors.first('id')}}</div>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
@@ -42,13 +32,8 @@
               type="password"
               class="form-control"
               name="password"
-              v-model="user.password"
               v-validate="'required|min:6|max:40'"
             />
-            <div
-              class="alert-danger"
-              v-if="submitted && errors.has('password')"
-            >{{errors.first('password')}}</div>
           </div>
           <div class="form-group">
             <label for="number">number</label>
@@ -56,13 +41,8 @@
               type="number"
               class="form-control"
               name="number"
-              v-model="user.number"
               v-validate="'required|min:6|max:40'"
             />
-            <div
-              class="alert-danger"
-              v-if="submitted && errors.has('number')"
-            >{{errors.first('number')}}</div>
           </div>
           <div class="form-group">
             <button class="btn btn-primary btn-block">Sign Up</button>
@@ -80,51 +60,7 @@
 </template>
 
 <script>
-import User from '../models/user'
 
-export default {
-  name: 'register',
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn
-    }
-  },
-  data() {
-    return {
-      user: new User('', '', '',''),
-      submitted: false,
-      successful: false,
-      message: ''
-    }
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push('/')
-    }
-  },
-  methods: {
-    handleRegister() {
-      this.message = ''
-      this.submitted = true
-      this.$validator.validate().then(valid => {
-        if (valid) {
-          this.$store.dispatch('auth/register', this.user).then(
-            data => {
-              this.message = data.message
-              this.successful = true
-            },
-            error => {
-              this.message = error.message
-              this.successful = false
-            }
-          ).then(
-            this.$router.push('/')
-          )
-        }
-      })
-    }
-  }
-}
 </script>
 
 <style scoped>

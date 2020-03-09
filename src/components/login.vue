@@ -9,22 +9,15 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
       />
-      <form name="form" 
-      @submit.prevent="handleLogin">
+      <form name="form">
         <div class="form-group">
           <label for="id">id</label>
           <input
             type="text"
             class="form-control"
             name="id"
-            v-model="user.id"
             v-validate="'required'"
           />
-          <div
-            class="alert alert-danger"
-            role="alert"
-            v-if="errors.has('id')"
-          >Username is required!</div>
         </div>
         <div class="form-group">
           <label for="password">Password</label>
@@ -32,14 +25,8 @@
             type="password"
             class="form-control"
             name="password"
-            v-model="user.password"
             v-validate="'required'"
           />
-          <div
-            class="alert alert-danger"
-            role="alert"
-            v-if="errors.has('password')"
-          >Password is required!</div>
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
@@ -55,53 +42,41 @@
   </div>
 </template>
 
+
 <script>
-import User from '../models/user'
-
-export default {
-  name: 'login',
-  computed: {
-    loggedIn() {
-      return this.$store.state.auth.status.loggedIn
-    }
-  },
-  data() {
-    return {
-      user: new User('', ''),
-      loading: false,
-      message: ''
-    }
-  },
-  mounted() {
-    if (this.loggedIn) {
-      this.$router.push('/')
-    }
-  },
-  methods: {
-    handleLogin() {
-      this.loading = true
-      this.$validator.validateAll()
-
-      if (this.errors.any()) {
-        this.loading = false
-        return
+  export default {
+    name: 'login',
+    data() {
+      return {
+        form: {
+          id: '',
+          password: '',
+        },
+            show: true
       }
-
-      if (this.user.username && this.user.password) {
-        this.$store.dispatch('auth/login', this.user).then(
-          () => {
-            this.$router.push('/profile')
-          },
-          error => {
-            this.loading = false
-            this.message = error.message
-          }
-        )
+    },
+    methods: {
+      onSubmit(evt) {
+        evt.preventDefault()
+        alert(JSON.stringify(this.form))
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        // Reset our form values
+        this.form.email = ''
+        this.form.name = ''
+        this.form.food = null
+        this.form.checked = []
+        // Trick to reset/clear native browser form validation state
+        this.show = false
+        this.$nextTick(() => {
+          this.show = true
+        })
       }
     }
   }
-}
 </script>
+
 
 <style scoped>
 label {

@@ -27,7 +27,24 @@ const routes = [{
         component: () =>
             import ("../components/reservation.vue")
     },
-
+    {
+        path: "/Login",
+        name: "Login",
+        component: () =>
+            import ("../components/Login.vue")
+    },
+    {
+        path: "/Register",
+        name: "Register",
+        component: () =>
+            import ("../components/Register.vue")
+    },
+    {
+        path: "/mypage",
+        name: "mypage",
+        component: () =>
+            import ("../components/mypage.vue")
+    },
     {
         path: "/about",
         name: "About",
