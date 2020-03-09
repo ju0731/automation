@@ -8,16 +8,16 @@
         </template>
     <b-card>
   <b-row>
-        <img src="@/assets/car1.png" style="max-width: 30rem;" align="top">
+        <div id='carpic'><img src="@/assets/car1.png" style="max-width: 30rem;" align="top"></div>
     
     <b-list-group >
             <p>▲ 차량 정보 </p>
             <b-list-group-item style="text-align:left;"><div id='carcnt'>재고: 1대</div></b-list-group-item>
-            <b-list-group-item style="text-align:left;"><div id='carprice'>가격: 하루 72350원</div></b-list-group-item>
-            <b-list-group-item><div id='carcolor'>색깔: 검은색</div></b-list-group-item>
-            <b-list-group-item><div id='cardisplace'>연비:  11.3~16.1km</div></b-list-group-item>
-            <b-list-group-item><div id='carsize'>승차 가능인원: 최대 6명</div></b-list-group-item>
-            <b-list-group-item><div id='carfuel'>연료: 디젤</div></b-list-group-item>
+            <b-list-group-item style="text-align:left;"><div id='carprice'>가격: 하루 7350원</div></b-list-group-item>
+            <b-list-group-item style="text-align:left;"><div id='carcolor'>색깔: 검은색</div></b-list-group-item>
+            <b-list-group-item style="text-align:left;"><div id='cardisplace'>연비:  11.3~16.1km</div></b-list-group-item>
+            <b-list-group-item style="text-align:left;"><div id='carsize'>승차 가능인원: 최대 6명</div></b-list-group-item>
+            <b-list-group-item style="text-align:left;"><div id='carfuel'>연료: 디젤</div></b-list-group-item>
     </b-list-group>
     
     <b-col md="auto" @submit="onSubmit" v-if="show">
@@ -73,6 +73,11 @@ var attrcnt = 0;
         console.log("hi");
         document.querySelector("#carname").innerHTML = response.data.car[attrcnt].name;
         document.querySelector("#carcnt").innerHTML = "재고: "+response.data.car[attrcnt].cnt+"대";
+        document.querySelector("#carprice").innerHTML = "가격: 하루 "+response.data.car[attrcnt].price+"원";
+        document.querySelector("#carcolor").innerHTML = "색상: "+response.data.car[attrcnt].color;
+        document.querySelector("#cardisplace").innerHTML = "배기량: "+response.data.car[attrcnt].displacement;
+        document.querySelector("#carsize").innerHTML = "사이즈: "+response.data.car[attrcnt].size;
+        document.querySelector("#carfuel").innerHTML = "연료: "+response.data.car[attrcnt].fuel;
   });
 
   export default {

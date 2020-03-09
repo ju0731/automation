@@ -56,6 +56,8 @@
 var reservename = "";
 document.onreadystatechange = () => {
   if (document.readyState == "complete") {
+        //axios.get('http://13.209.20.148:8090/v0.0.3/crbs', {
+        //})
         axios.get('http://localhost:8090/v0.0.3/crbs', {
         })
         .then(function(response){

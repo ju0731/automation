@@ -212,19 +212,26 @@ export default {
             console.log(document.querySelector("#fuelname").value);
             console.log(document.querySelector("#price").value);
 
-/*
-            axios.post('http://localhost:8090/users/', {
+
+            /*axios.post('http://13.209.20.148:8090/v0.0.3/crbs/reservations/', {
                 "carnum" : document.querySelector("#carnum").value,
                 "modelname" : document.querySelector("#modelname").value,
                 "modelsize" : document.querySelector("#modelsize").value,
                 "modelcolor" : document.querySelector("#modelcolor").value,
                 "fuelname" : document.querySelector("#fuelname").value,
                 "price" : document.querySelector("#price").value
+            })*/
+            axios.post('http://13.209.20.148:8090/v0.0.3/crbs/reservations', {
+                "customerId" : "123",
+                "carCode" : "12가3456",
+                "startDate" : "2019-03-21",
+                "endDate" : "2020-03-21",
             })
             .then(function(response){
                 alert(response);
+                console.log('http://13.209.20.148:8090/v0.0.3/crbs/reservations')
                 console.log(response); // 객체 형태로 반환. 파싱작업 불필요
-            });*/
+            });
 
             console.log("submit");
         }
