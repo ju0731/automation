@@ -70,7 +70,9 @@
 var attrcnt = 0;
   axios.get('http://localhost:8090/v0.0.3/crbs', {})
         .then(function(response){
-        console.log("hi");
+        var url = "";
+        url = localStorage.getItem(response.data.car[attrcnt].name);
+
         document.querySelector("#carname").innerHTML = response.data.car[attrcnt].name;
         document.querySelector("#carcnt").innerHTML = "재고: "+response.data.car[attrcnt].cnt+"대";
         document.querySelector("#carprice").innerHTML = "가격: 하루 "+response.data.car[attrcnt].price+"원";
@@ -78,6 +80,7 @@ var attrcnt = 0;
         document.querySelector("#cardisplace").innerHTML = "배기량: "+response.data.car[attrcnt].displacement;
         document.querySelector("#carsize").innerHTML = "사이즈: "+response.data.car[attrcnt].size;
         document.querySelector("#carfuel").innerHTML = "연료: "+response.data.car[attrcnt].fuel;
+        document.querySelector("#carpic").innerHTML = "<img src='"+url+"' style='width: 30rem; height: 25rem;' align='left'>";
   });
 
   export default {
@@ -130,3 +133,4 @@ var attrcnt = 0;
     }
   }
 </script>
+
