@@ -37,7 +37,16 @@
 </center>
 </div>  
 </template>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.2/dist/vue.js" ></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
+
+axios.get('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs/mybooking/123456', {
+})
+.then(function(response){
+    console.log(response);
+});
 export default {
     name:'mypage',
     data() {
