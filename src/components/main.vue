@@ -58,7 +58,7 @@ document.onreadystatechange = () => {
   if (document.readyState == "complete") {
         //axios.get('http://13.209.20.148:8090/v0.0.3/crbs', {
         //})
-        axios.get('http://localhost:8090/v0.0.3/crbs', {
+        axios.get('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs', {
         })
         .then(function(response){
 

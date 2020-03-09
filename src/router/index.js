@@ -27,6 +27,7 @@ const routes = [{
         component: () =>
             import ("../components/reservation.vue")
     },
+
     {
         path: "/about",
         name: "About",

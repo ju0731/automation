@@ -232,7 +232,7 @@ export default {
             model = document.querySelector("#modelname").value;
             localStorage.setItem(model, dataUrl); 
 
-            axios.post('http://localhost:8090/v0.0.3/crbs/admins', {
+            axios.post('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs/admins', {
                 "CODE" : document.querySelector("#carnum").value,
                 "NAME" : document.querySelector("#modelname").value,
                 "PRICE" : document.querySelector("#price").value,
