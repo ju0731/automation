@@ -28,24 +28,6 @@ const routes = [{
             import ("../components/reservation.vue")
     },
     {
-        path: "/Login",
-        name: "Login",
-        component: () =>
-            import ("../components/Login.vue")
-    },
-    {
-        path: "/Profile",
-        name: "Profile",
-        component: () =>
-            import ("../components/Profile.vue")
-    },
-    {
-        path: "/Register",
-        name: "Register",
-        component: () =>
-            import ("../components/Register.vue")
-    },
-    {
         path: "/about",
         name: "About",
         component: () =>
