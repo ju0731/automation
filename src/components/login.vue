@@ -30,7 +30,6 @@
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
-            <span class="spinner-border spinner-border-sm" v-show="loading"></span>
             <span>Login</span>
           </button>
         </div>
@@ -56,9 +55,8 @@
       }
     },
     methods: {
-      onSubmit(evt) {
-        evt.preventDefault()
-        alert(JSON.stringify(this.form))
+      onSubmit() {
+        alert(this.form.id);
       },
       onReset(evt) {
         evt.preventDefault()

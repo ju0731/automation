@@ -233,22 +233,16 @@ export default {
             localStorage.setItem(model, dataUrl); 
 
             axios.post('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs/admins', {
-                "CODE" : document.querySelector("#carnum").value,
-                "NAME" : document.querySelector("#modelname").value,
-                "PRICE" : document.querySelector("#price").value,
-                "COLOR" : document.querySelector("#modelcolor").value,
-                "FUEL" : document.querySelector("#fuelname").value,
-                "DISPLACEMENT" : document.querySelector("#displace").value,
-                "SIZE" : document.querySelector("#modelsize").value,
-                "IMAGEURL" : "NULL",
-                "CNT" : document.querySelector("#modelcnt").value
-            })/*
-            axios.post('http://localhost:8090/v0.0.3/crbs/reservations', {
-                "CUSTOMER_ID" : "123",
-                "CAR_CODE" : "12가3456",
-                "STARTDATE" : "2019-03-21",
-                "ENDDATE" : "2020-03-21"
-            })*/
+                "code" : document.querySelector("#carnum").value,
+                "name" : document.querySelector("#modelname").value,
+                "price" : parseInt(document.querySelector("#price").value),
+                "color" : document.querySelector("#modelcolor").value,
+                "fuel" : document.querySelector("#fuelname").value,
+                "displacement" : parseInt(document.querySelector("#displace").value),
+                "size" : document.querySelector("#modelsize").value,
+                "imageUrl" : null,
+                "cnt" : parseInt(document.querySelector("#modelcnt").value)
+            })
             .then(function(response){
                 alert(response);
                 console.log(response); // 객체 형태로 반환. 파싱작업 불필요

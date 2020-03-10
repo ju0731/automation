@@ -42,7 +42,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 
-axios.get('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs/mybooking/123456', {
+axios.get('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs/mybooking/sh1010', {
 })
 .then(function(response){
     console.log(response);

@@ -54,8 +54,8 @@
   
   </b-jumbotron>
   <center>
-  <b-button type="submit" variant="primary" href="#">예약하기</b-button>
-    <b-button variant="success" to="/">다른 차 보러가기</b-button>
+  <b-button type="submit" variant="primary" href="#" @click="onClickreserve">예약하기</b-button>
+  <b-button variant="success" to="/main">다른 차 보러가기</b-button>
   </center>
   <br>
   <br>
@@ -68,7 +68,7 @@
 <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 <script>
 var attrcnt = 0;
-  axios.get('http://localhost:8090/v0.0.3/crbs', {})
+  axios.get('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs', {})
         .then(function(response){
         var url = "";
         url = localStorage.getItem(response.data.car[attrcnt].name);
@@ -127,8 +127,11 @@ var attrcnt = 0;
     },
     methods: {
       onSubmit(evt) {
-        evt.preventDefault()
-        alert("예약이 완료되셨습니다!")
+        evt.preventDefault();
+        alert("예약이 완료되셨습니다!");
+      },
+      onClickreserve() {
+
       }
     }
   }
