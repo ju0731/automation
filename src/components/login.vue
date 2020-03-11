@@ -9,14 +9,15 @@
         src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
         class="profile-img-card"
       />
-      <form name="form">
+      <form name="form" 
+      @submit.prevent="handleLogin">
         <div class="form-group">
           <label for="id">id</label>
           <input
             type="text"
             class="form-control"
             name="id"
-            v-validate="'required'"
+            v-model="user.id"
           />
         </div>
         <div class="form-group">
@@ -25,11 +26,12 @@
             type="password"
             class="form-control"
             name="password"
-            v-validate="'required'"
+            v-model="user.password"
           />
         </div>
         <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
+            <span class="spinner-border spinner-border-sm" v-show="loading"></span>
             <span>Login</span>
           </button>
         </div>
@@ -41,40 +43,50 @@
   </div>
 </template>
 
-
 <script>
-  export default {
-    name: 'login',
-    data() {
-      return {
-        form: {
-          id: '',
-          password: '',
-        },
-            show: true
-      }
-    },
-    methods: {
-      onSubmit() {
-        alert(this.form.id);
-      },
-      onReset(evt) {
-        evt.preventDefault()
-        // Reset our form values
-        this.form.email = ''
-        this.form.name = ''
-        this.form.food = null
-        this.form.checked = []
-        // Trick to reset/clear native browser form validation state
-        this.show = false
-        this.$nextTick(() => {
-          this.show = true
-        })
+import User from '../models/user.js'
+
+export default {
+  name: 'login',
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn
+    }
+  },
+  data() {
+    return {
+      user: new User('', ''),
+      loading: false,
+      message: ''
+    };
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push('/')
+    }
+  },
+  methods: {
+    handleLogin() {
+      this.loading = true;
+
+     if (this.user.id && this.user.password) {
+       
+        this.$store.dispatch('auth/login', this.user).then(
+          () => {
+            alert('환영합니다!')
+            this.$router.push('/main')
+          },
+          error => {
+            alert('정보를 다시 확인해주세요!')
+            this.loading = false;
+            this.message = error.message;
+          }
+        );
       }
     }
   }
+};
 </script>
-
 
 <style scoped>
 label {

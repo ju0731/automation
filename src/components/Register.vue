@@ -9,12 +9,12 @@
       <form name="form" @submit.prevent="handleRegister">
         <div v-if="!successful">
           <div class="form-group">
-            <label for="username">Username</label>
+            <label for="name">Name</label>
             <input
               type="text"
               class="form-control"
               name="username"
-              v-validate="'required|min:3|max:20'"
+              v-model="user.name"
             />
           </div>
           <div class="form-group">
@@ -23,7 +23,7 @@
               type="text"
               class="form-control"
               name="id"
-              v-validate="'required|max:50'"
+              v-model="user.id"
             />
           </div>
           <div class="form-group">
@@ -32,16 +32,16 @@
               type="password"
               class="form-control"
               name="password"
-              v-validate="'required|min:6|max:40'"
+              v-model="user.password"
             />
           </div>
           <div class="form-group">
-            <label for="number">number</label>
+            <label for="phonenumber">number</label>
             <input
               type="number"
               class="form-control"
-              name="number"
-              v-validate="'required|min:6|max:40'"
+              name="phonenumber"
+              v-model="user.phonenumber"
             />
           </div>
           <div class="form-group">
@@ -60,7 +60,65 @@
 </template>
 
 <script>
+import User from '../models/user'
 
+export default {
+  name: 'register',
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn
+    }
+  },
+  data() {
+    return {
+      user: new User('', '', '',''),
+      submitted: false,
+      successful: false,
+      message: ''
+    }
+  },
+  mounted() {
+    if (this.loggedIn) {
+      this.$router.push('/')
+    }
+  },
+  methods: {
+    handleRegister() {  
+      this.message = ''
+      this.submitted = true
+      //this.$validator.validate().then(valid => {
+        //if (valid) {
+          this.$store.dispatch('auth/register', this.user).then(
+            data => {
+              this.message = data.message
+              this.successful = true
+            },
+            error => {
+
+              this.message = error.message
+              this.successful = false
+            }
+          ).then(
+            this.$router.push('/Login')
+          )
+        //}
+      //})
+
+
+      // axios.post('http://ec2-13-209-20-148.ap-northeast-2.compute.amazonaws.com:8090/v0.0.3/crbs/users',{
+      //     "NAME":document.querySelector("#name").value,
+      //     "ID":document.querySelector("#id").value,
+      //     "PASSWORD":document.querySelector("#password").value,
+      //     "PHONENUMBER":document.querySelector("#phonenumber").value,
+      //        })
+      //     .then(function(response){
+      //           alert(response);
+      //           console.log(response); // 객체 형태로 반환. 파싱작업 불필요
+      //       });
+      //       console.log("submit");
+    }
+  }
+}
 </script>
 
 <style scoped>
