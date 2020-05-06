@@ -6,12 +6,17 @@ files:
 hooks:
   AfterInstall:
     - location: /afterInstall.sh
-      timeout: 150
+      timeout: 200
       runas: ec2-user
       #    - location: scripts/generate_config.sh
       #      timeout: 150
       #      runas: ec2-user
 
+  ApplicationRun:
+    - location: /applicationRun.sh
+      timeout: 150
+      runas: ec2-user
+      
 permissions:
     - object: /
       pattern: "**"
