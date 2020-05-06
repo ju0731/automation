@@ -12,9 +12,9 @@ hooks:
       #      timeout: 150
       #      runas: ec2-user
 
-  ApplicationRun:
+  ApplicationStart:
     - location: /applicationRun.sh
-      timeout: 300
+      timeout: 150
       runas: ec2-user
       
 permissions:
