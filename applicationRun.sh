@@ -3,5 +3,5 @@ cd /home/ec2-user/front
 
 echo "test" > test.json
 
-sleep 40s
+sleep 20s
 npm run serve
